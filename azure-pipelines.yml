@@ -1,0 +1,57 @@
+
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger: none
+
+pool: Pra_pipe
+
+stages:
+  - stage: Terraforminitplanandtfsec
+    displayName: Terraform init, plan and tfsec
+    jobs:
+      - job: Terrforminitandplan
+        displayName: Terraform init
+        steps:
+        - task: TerraformTaskV4@4
+          inputs:
+            provider: 'azurerm'
+            command: 'init'
+            workingDirectory: '$(System.DefaultWorkingDirectory)/DevOps_Terraform/Environments'
+            backendServiceArm: 'Websure_Service_Connection'
+            backendAzureRmResourceGroupName: 'prashant_rg'
+            backendAzureRmStorageAccountName: 'prastoragehai'
+            backendAzureRmContainerName: 'mypracontainer'
+            backendAzureRmKey: 'terraform.tfstate'
+        
+        - task: TerraformTaskV4@4
+          inputs:
+            provider: 'azurerm'
+            command: 'plan'
+            workingDirectory: '$(System.DefaultWorkingDirectory)/DevOps_Terraform/Environments'
+            environmentServiceNameAzureRM: 'Websure_Service_Connection'
+
+  - stage: ManualValidationandterrformapply
+    displayName: Manual Validation and terrform apply  
+    jobs:
+      - job: Manualvalidation
+        displayName: Manualvalidation
+        pool: server
+        steps:
+        - task: ManualValidation@1
+          inputs:
+            notifyUsers: 'prashantgi1995@gmail.com'
+            approvers: 'prashantgi1995@gmail.com'
+
+      - job: Terraformapply
+        displayName: Terraform apply
+        steps:
+        - task: TerraformTaskV4@4
+          inputs:
+            provider: 'azurerm'
+            command: 'apply'
+            workingDirectory: '$(System.DefaultWorkingDirectory)/DevOps_Terraform/Environments'
+            environmentServiceNameAzureRM: 'Websure_Service_Connection'
+        
