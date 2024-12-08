@@ -25,7 +25,7 @@ stages:
           inputs:
             provider: 'azurerm'
             command: 'init'
-            workingDirectory: '$(System.DefaultWorkingDirectory)/DevOps_Terraform/Environments'
+            workingDirectory: '$(System.DefaultWorkingDirectory)/Environments'
             backendServiceArm: 'Websure_Service_Connection'
             backendAzureRmResourceGroupName: 'prashant_rg'
             backendAzureRmStorageAccountName: 'prastoragehai'
@@ -37,7 +37,7 @@ stages:
           inputs:
             provider: 'azurerm'
             command: 'plan'
-            workingDirectory: '$(System.DefaultWorkingDirectory)/DevOps_Terraform/Environments'
+            workingDirectory: '$(System.DefaultWorkingDirectory)/Environments'
             environmentServiceNameAzureRM: 'Websure_Service_Connection'
 
   - stage: ManualValidationandterrformapply
@@ -61,6 +61,6 @@ stages:
           inputs:
             provider: 'azurerm'
             command: 'apply'
-            workingDirectory: '$(System.DefaultWorkingDirectory)/DevOps_Terraform/Environments'
+            workingDirectory: '$(System.DefaultWorkingDirectory)/Environments'
             environmentServiceNameAzureRM: 'Websure_Service_Connection'
         
