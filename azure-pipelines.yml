@@ -9,6 +9,17 @@ trigger: none
 pool: Pra_pipe
 
 stages:
+  - stage: Terraforminstaller
+    displayName: Teraform tool installer
+    jobs:
+      - job: Terraforminstaller
+        displayName: Terraform tool installer
+        steps:
+        - task: TerraformInstaller@1
+          displayName: Terraform installer 
+          inputs:
+            terraformVersion: 'latest'
+            
   - stage: Terraforminitplanandtfsec
     displayName: Terraform init, plan and tfsec
     jobs:
