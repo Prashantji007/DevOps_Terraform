@@ -16,6 +16,7 @@ stages:
         displayName: Terraform init
         steps:
         - task: TerraformTaskV4@4
+          displayName: terraform init
           inputs:
             provider: 'azurerm'
             command: 'init'
@@ -27,6 +28,7 @@ stages:
             backendAzureRmKey: 'terraform.tfstate'
         
         - task: TerraformTaskV4@4
+          displayName: terraform plan
           inputs:
             provider: 'azurerm'
             command: 'plan'
@@ -41,6 +43,7 @@ stages:
         pool: server
         steps:
         - task: ManualValidation@1
+          displayName: manual validation
           inputs:
             notifyUsers: 'prashantgi1995@gmail.com'
             approvers: 'prashantgi1995@gmail.com'
@@ -49,6 +52,7 @@ stages:
         displayName: Terraform apply
         steps:
         - task: TerraformTaskV4@4
+          displayName: terraform plan
           inputs:
             provider: 'azurerm'
             command: 'apply'
