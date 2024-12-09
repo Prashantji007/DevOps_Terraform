@@ -17,6 +17,10 @@ stages:
   - stage: Terraforminitplanandtfsec
     displayName: Terraform init, plan and tfsec
     jobs:
+      - job: tfsec
+        displayName: tfsec check
+        steps:
+        
       - job: Terrforminitandplan
         displayName: Terraform init
         steps:
@@ -52,12 +56,23 @@ stages:
           inputs:
             notifyUsers: 'prashantgi1995@gmail.com'
             approvers: 'prashantgi1995@gmail.com'
+        - task: TerraformTaskV4@4
+          displayName: terraform init
+          inputs:
+            provider: 'azurerm'
+            command: 'init'
+            workingDirectory: '$(System.DefaultWorkingDirectory)/Environments'
+            backendServiceArm: 'Websure_Service_Connection'
+            backendAzureRmResourceGroupName: 'prashant_rg'
+            backendAzureRmStorageAccountName: 'prastoragehai'
+            backendAzureRmContainerName: 'mypracontainer'
+            backendAzureRmKey: 'terraform.tfstate'
 
       - job: Terraformapply
         displayName: Terraform apply
         steps:
         - task: TerraformTaskV4@4
-          displayName: terraform plan
+          displayName: terraform apply
           inputs:
             provider: 'azurerm'
             command: 'apply'
