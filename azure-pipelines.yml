@@ -15,6 +15,7 @@ stages:
             terraformVersion: 'latest'
             
   - stage: Terraforminitplanandtfsec
+    dependsOn: Terraforminstaller
     displayName: Terraform init, plan and tfsec
     jobs:
       - job: tfsec
@@ -64,6 +65,7 @@ stages:
         
 
       - job: Terraformapply
+        dependsOn: Manualvalidation
         displayName: Terraform apply
         steps:
         - task: TerraformTaskV4@4
