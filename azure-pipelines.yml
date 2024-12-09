@@ -20,7 +20,12 @@ stages:
       - job: tfsec
         displayName: tfsec check
         steps:
-        
+        - task: tfsec@1
+          displayName: Tfsec Check vulnerbality
+          inputs:
+            version: 'v1.26.0'
+            dir: '$(System.DefaultWorkingDirectory)/Environments'
+
       - job: Terrforminitandplan
         displayName: Terraform init
         steps:
@@ -56,6 +61,11 @@ stages:
           inputs:
             notifyUsers: 'prashantgi1995@gmail.com'
             approvers: 'prashantgi1995@gmail.com'
+        
+
+      - job: Terraformapply
+        displayName: Terraform apply
+        steps:
         - task: TerraformTaskV4@4
           displayName: terraform init
           inputs:
@@ -67,10 +77,7 @@ stages:
             backendAzureRmStorageAccountName: 'prastoragehai'
             backendAzureRmContainerName: 'mypracontainer'
             backendAzureRmKey: 'terraform.tfstate'
-
-      - job: Terraformapply
-        displayName: Terraform apply
-        steps:
+            
         - task: TerraformTaskV4@4
           displayName: terraform apply
           inputs:
