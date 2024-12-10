@@ -1,0 +1,12 @@
+trigger: none
+
+pool: Pra_pipe
+
+jobs:
+- job: PreWork
+  steps:
+  - script: "Do pre-work"
+
+- job: PostWork
+  steps:
+  - script: "Do post-work using a different hosted image"
