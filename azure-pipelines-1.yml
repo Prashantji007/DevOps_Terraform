@@ -5,7 +5,7 @@ pool: Pra_pipe
 steps:
 - task: CmdLine@2
   inputs:
-    script: 'ls'
+    script: 'whoami'
     
 - script: echo "Hello, world!"
   displayName: 'Run a one-line script'
