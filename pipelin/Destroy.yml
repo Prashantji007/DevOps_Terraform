@@ -1,0 +1,30 @@
+# Starter pipeline
+trigger: none
+
+pool: Pra_pipe
+
+stages:
+  - stage: terraforminitanddestroy
+    jobs: 
+      - job: Terraforminit
+        displayName: Terraform init
+        steps:
+        - task: TerraformTaskV4@4
+          displayName: Terraform init
+          inputs:
+            provider: 'azurerm'
+            command: 'init'
+            workingDirectory: '$(System.DefaultWorkingDirectory)/Environments'
+            backendServiceArm: 'Websure_Service_Connection'
+            backendAzureRmResourceGroupName: 'prashant_rg'
+            backendAzureRmStorageAccountName: 'prastoragehai'
+            backendAzureRmContainerName: 'mypracontainer'
+            backendAzureRmKey: 'destroy-tfstate'
+        - task: TerraformTaskV4@4
+          displayName: Terraform destroy
+          inputs:
+            provider: 'azurerm'
+            command: 'destroy'
+            workingDirectory: '$(System.DefaultWorkingDirectory)/Environments'
+            commandOptions: '--auto-approve'
+            environmentServiceNameAzureRM: 'Websure_Service_Connection'
