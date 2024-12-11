@@ -5,8 +5,12 @@ pool: Pra_pipe
 jobs:
 - job: PreWork
   steps:
-  - script: "console.log('Pre-Work: This Pipeline is with steps with JOB pipeline')"
-
+  - task: PowerShell@2
+    inputs:
+      targetType: 'inline'
+      script: 'Get-Process | Sort-Object -Property WorkingSet -Descending | Select-Object -First 10 -Property Name, Id, @{Name="Memory (MB)"; Expression={[math]::round($_.WorkingSet / 1MB, 2)}} | ForEach-Object { Write-Host "$($_.Name) - $($_.''Memory (MB)'') MB" -ForegroundColor Green }'
 - job: PostWork
   steps:
-  - script: "console.log('Post-Work: This Pipeline is with steps with JOB pipeline')"
+  - task: CmdLine@2
+    inputs:
+      script: 'wmic process get name,processid,workingsetsize | sort /r /+40 | more'
