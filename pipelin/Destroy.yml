@@ -19,7 +19,7 @@ stages:
             backendAzureRmResourceGroupName: 'prashant_rg'
             backendAzureRmStorageAccountName: 'prastoragehai'
             backendAzureRmContainerName: 'mypracontainer'
-            backendAzureRmKey: 'destroy-tfstate'
+            backendAzureRmKey: 'terraform.tfstate'
         - task: TerraformTaskV4@4
           displayName: Terraform destroy
           inputs:
