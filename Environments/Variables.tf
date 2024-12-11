@@ -4,3 +4,20 @@ variable "module_rg" {
     location = string
   }))
 }
+
+
+variable "vnmod" {
+  type = map(any)
+}
+
+variable "snmod" {
+  type = map(any)
+}
+
+variable "vmmod" {
+  type = map(any)
+}
+
+variable "nsgmod" {
+  type = map(any)
+}
