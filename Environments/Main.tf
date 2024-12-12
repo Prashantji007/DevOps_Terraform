@@ -23,7 +23,7 @@ module "vmnod" {
 }
 
 module "nsgmod" {
-  depends_on = [ module.vmnod, module.rgmod ]
+  depends_on = [ module.vmnod, module.modrg ]
   source = "../Modules/Azurerm_NSG"
   nsg = var.nsgmod
   
