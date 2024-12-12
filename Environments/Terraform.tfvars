@@ -9,7 +9,7 @@ vnmod = {
   vn1 = {
    name = "promovn"
     location = "mexico central"
-    resource_group_name = "Promo-RG"
+    resource_group_name = "WebsureApp"
     address_space = ["10.0.0.0/16"]
   }
 }
@@ -19,7 +19,7 @@ snmod = {
     name = "promosn1"
   virtual_network_name = "promovn"
   address_prefixes = ["10.0.0.0/24"]
-  resource_group_name = "Promo-RG"
+  resource_group_name = "WebsureApp"
   }
 }
 
@@ -27,7 +27,7 @@ vmmod = {
   vm1 = {
     virtual_network_name = "promovn"
     publicipname = "Promo-PIP1"
-     resource_group_name = "Promo-RG"
+     resource_group_name = "WebsureApp"
       location = "mexico central"
       nicname = "promonic1"
       VMname = "promovm1"
@@ -37,7 +37,7 @@ vmmod = {
   vm2 = {
      virtual_network_name = "promovn"
     publicipname = "Promo-PIP2"
-     resource_group_name = "Promo-RG"
+     resource_group_name = "WebsureApp"
       location = "mexico central"
       nicname = "promonic2"
       VMname = "promovm2"
@@ -47,7 +47,7 @@ vmmod = {
   vm3 = {
      virtual_network_name = "promovn"
     publicipname = "Promo-PIP3"
-     resource_group_name = "Promo-RG"
+     resource_group_name = "WebsureApp"
       location = "mexico central"
       nicname = "promonic3"
       VMname = "promovm3"
@@ -60,7 +60,7 @@ nsgmod = {
   nsg1={
     virtual_network_name = "promovn"
     nsgname = "promovm1_NSG"
-     resource_group_name = "Promo-RG"
+     resource_group_name = "WebsureApp"
       location = "mexico central"
       security_rule_name = "promovm1_securityrule"
   }
@@ -68,7 +68,7 @@ nsgmod = {
   nsg2={
     virtual_network_name = "promovn"
     nsgname = "promovm2_NSG"
-     resource_group_name = "Promo-RG"
+     resource_group_name = "WebsureApp"
       location = "mexico central"
       security_rule_name = "promovm1_securityrule"
   }
@@ -76,7 +76,7 @@ nsgmod = {
   nsg3={
     virtual_network_name = "promovn"
     nsgname = "promovm3_NSG"
-     resource_group_name = "Promo-RG"
+     resource_group_name = "WebsureApp"
       location = "mexico central"
       security_rule_name = "promovm1_securityrule"
   }
