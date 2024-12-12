@@ -17,7 +17,7 @@ module "snmod" {
 }
 
 module "vmnod" {
-  depends_on = [module.rgmod, module.vnmod , module.snmod,]
+  depends_on = [module.modrg, module.vnmod , module.snmod]
     source = "../Modules/Azurerm_VM"
     ni = var.vmmod
 }
