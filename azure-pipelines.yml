@@ -54,6 +54,7 @@ stages:
     displayName: Manual Validation and terrform apply  
     jobs:
       - job: Manualvalidation
+        timeoutInMinutes: 1
         displayName: Manualvalidation
         pool: server
         steps:
