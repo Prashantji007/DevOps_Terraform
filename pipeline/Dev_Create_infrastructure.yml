@@ -3,18 +3,6 @@ trigger:
   
 pool: Pra_pipe
 
-parameters:
-- name: Environments
-  displayName: Select Environments for deployment
-  type: string
-  default: Dev
-  values: 
-    - Dev
-    - Prod
-    - QA
-    - Sendbox
-
-
 stages:
   - stage: Terraforminstaller
     displayName: Teraform tool installer
@@ -53,7 +41,7 @@ stages:
             backendAzureRmResourceGroupName: 'prashant_rg'
             backendAzureRmStorageAccountName: 'prastoragehai'
             backendAzureRmContainerName: 'mypracontainer'
-            backendAzureRmKey: '${{ parameters.Environments }}_terraform.tfstate'
+            backendAzureRmKey: 'terraform.tfstate'
         
         - task: TerraformTaskV4@4
           displayName: terraform plan
