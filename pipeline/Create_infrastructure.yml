@@ -61,7 +61,7 @@ stages:
             provider: 'azurerm'
             command: 'plan'
             workingDirectory: '$(System.DefaultWorkingDirectory)/Environments'
-            commandOptions: '-var-file = vwvwv'
+            commandOptions: '--var-file = ${{ parameters.Environments }}_Terraform.tfvars'
             environmentServiceNameAzureRM: 'Websure_Service_Connection'
 
   - stage: ManualValidationandterrformapply
