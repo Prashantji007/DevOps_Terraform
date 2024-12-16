@@ -61,6 +61,7 @@ stages:
             provider: 'azurerm'
             command: 'plan'
             workingDirectory: '$(System.DefaultWorkingDirectory)/Environments'
+            commandOptions: '-var-file = vwvwv'
             environmentServiceNameAzureRM: 'Websure_Service_Connection'
 
   - stage: ManualValidationandterrformapply
