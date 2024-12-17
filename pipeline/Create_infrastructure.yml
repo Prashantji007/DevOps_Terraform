@@ -13,6 +13,10 @@ parameters:
     - QA
     - Sendbox
 
+variables:
+  - name: Work_dir
+    value: $(System.DefaultWorkingDirectory)/Environments
+
 
 stages:
   - stage: Terraforminstaller
@@ -37,7 +41,7 @@ stages:
           displayName: Tfsec Check vulnerbality
           inputs:
             version: 'v1.26.0'
-            dir: '$(System.DefaultWorkingDirectory)/Environments'
+            dir: '${variables.Work_dir}'
 
       - job: Terrforminitandplan
         displayName: Terraform init
@@ -47,7 +51,7 @@ stages:
           inputs:
             provider: 'azurerm'
             command: 'init'
-            workingDirectory: '$(System.DefaultWorkingDirectory)/Environments'
+            workingDirectory: '${variables.Work_dir}'
             backendServiceArm: 'Websure_Service_Connection'
             backendAzureRmResourceGroupName: 'prashant_rg'
             backendAzureRmStorageAccountName: 'prastoragehai'
@@ -59,7 +63,7 @@ stages:
           inputs:
             provider: 'azurerm'
             command: 'plan'
-            workingDirectory: '$(System.DefaultWorkingDirectory)/Environments'
+            workingDirectory: '${variables.Work_dir}'
             commandOptions: '--var-file=${{ parameters.Environments }}_Terraform.tfvars'
             environmentServiceNameAzureRM: 'Websure_Service_Connection'
 
@@ -88,7 +92,7 @@ stages:
           inputs:
             provider: 'azurerm'
             command: 'init'
-            workingDirectory: '$(System.DefaultWorkingDirectory)/Environments'
+            workingDirectory: '${variables.Work_dir}'
             backendServiceArm: 'Websure_Service_Connection'
             backendAzureRmResourceGroupName: 'prashant_rg'
             backendAzureRmStorageAccountName: 'prastoragehai'
@@ -100,6 +104,6 @@ stages:
           inputs:
             provider: 'azurerm'
             command: 'apply'
-            workingDirectory: '$(System.DefaultWorkingDirectory)/Environments'
+            workingDirectory: '${variables.Work_dir}'
             environmentServiceNameAzureRM: 'Websure_Service_Connection'
         
