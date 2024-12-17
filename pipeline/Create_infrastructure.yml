@@ -14,10 +14,10 @@ parameters:
     - Sendbox
 
 variables:
-  # - name: Work_dir
-  #   value: $(System.DefaultWorkingDirectory)/Environments
+  - name: Work_dir
+    value: $(System.DefaultWorkingDirectory)/Environments
 
-  - Work_dir: $(System.DefaultWorkingDirectory)/Environments
+  # - Work_dir: $(System.DefaultWorkingDirectory)/Environments
 
 
 stages:
