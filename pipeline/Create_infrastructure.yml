@@ -64,7 +64,7 @@ stages:
             environmentServiceNameAzureRM: 'Websure_Service_Connection'
 
   - stage: ManualValidationandterrformapply
-    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'main'))
+    #condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'main'))
     displayName: Manual Validation and terrform apply  
     jobs:
       - job: Manualvalidation
