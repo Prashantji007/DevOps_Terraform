@@ -41,7 +41,7 @@ stages:
           displayName: Tfsec Check vulnerbality
           inputs:
             version: 'v1.26.0'
-            dir: '${variables.Work_dir}'
+            dir: '$(Work_dir)'
 
       - job: Terrforminitandplan
         displayName: Terraform init
@@ -51,7 +51,7 @@ stages:
           inputs:
             provider: 'azurerm'
             command: 'init'
-            workingDirectory: '${variables.Work_dir}'
+            workingDirectory: '$(Work_dir)'
             backendServiceArm: 'Websure_Service_Connection'
             backendAzureRmResourceGroupName: 'prashant_rg'
             backendAzureRmStorageAccountName: 'prastoragehai'
@@ -63,7 +63,7 @@ stages:
           inputs:
             provider: 'azurerm'
             command: 'plan'
-            workingDirectory: '${variables.Work_dir}'
+            workingDirectory: '$(Work_dir)'
             commandOptions: '--var-file=${{ parameters.Environments }}_Terraform.tfvars'
             environmentServiceNameAzureRM: 'Websure_Service_Connection'
 
@@ -92,7 +92,7 @@ stages:
           inputs:
             provider: 'azurerm'
             command: 'init'
-            workingDirectory: '${variables.Work_dir}'
+            workingDirectory: '$(Work_dir)'
             backendServiceArm: 'Websure_Service_Connection'
             backendAzureRmResourceGroupName: 'prashant_rg'
             backendAzureRmStorageAccountName: 'prastoragehai'
@@ -104,6 +104,6 @@ stages:
           inputs:
             provider: 'azurerm'
             command: 'apply'
-            workingDirectory: '${variables.Work_dir}'
+            workingDirectory: '$(Work_dir)'
             environmentServiceNameAzureRM: 'Websure_Service_Connection'
         
