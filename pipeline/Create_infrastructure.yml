@@ -24,6 +24,11 @@ variables:
 
 
 stages:
+  - stage: tflint
+    jobs:
+      - job: tflintinstall
+        steps:
+          - 
   - stage: Terraforminstaller
     displayName: Teraform tool installer
     jobs:
