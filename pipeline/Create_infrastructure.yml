@@ -25,10 +25,23 @@ variables:
 
 stages:
   - stage: tflint
+    displayName: "Lint Terraform Code"
     jobs:
       - job: tflintinstall
+        displayName: tflint install
         steps:
-          - 
+        # - task: UsePythonVersion@1
+        #   inputs:
+        #     versionSpec: '3.x'  # Python is a TFLint dependency
+        - script: |
+            curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
+          displayName: 'Install TFLint'
+      
+        - script: |
+              tflint --init 
+              tflint
+          displayName: 'Run TFLint'
+                            
   - stage: Terraforminstaller
     displayName: Teraform tool installer
     jobs:
