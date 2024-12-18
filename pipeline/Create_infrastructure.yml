@@ -14,10 +14,13 @@ parameters:
     - Sendbox
 
 variables:
-  - name: Work_dir
-    value: $(System.DefaultWorkingDirectory)/Environments
+  # this is the first way we directly give like variablename: value
+  Work_dir: $(System.DefaultWorkingDirectory)/Environments
 
-  # - Work_dir: $(System.DefaultWorkingDirectory)/Environments
+  #this is the 2nd way in which saperately define name then variable value
+  # - name: Work_dir
+  #   value: $(System.DefaultWorkingDirectory)/Environments
+
 
 
 stages:
