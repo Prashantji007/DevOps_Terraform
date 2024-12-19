@@ -34,7 +34,8 @@ stages:
         #   inputs:
         #     versionSpec: '3.x'  # Python is a TFLint dependency
         - script: |
-            curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
+             curl -LO https://github.com/terraform-linters/tflint/releases/latest/download/tflint_windows_amd64.zip
+             tar -xf tflint_windows_amd64.zip -C $(Work_dir)
           displayName: 'Install TFLint'
       
         - script: |
