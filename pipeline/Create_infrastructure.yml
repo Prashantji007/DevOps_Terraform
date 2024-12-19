@@ -39,6 +39,7 @@ stages:
       
         - script: |
               tflint --init 
+              cd $(Work_dir)
               tflint
           displayName: 'Run TFLint'
                             
