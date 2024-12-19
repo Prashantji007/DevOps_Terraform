@@ -24,6 +24,38 @@ variables:
 
 
 stages:
+  - stage: Checkov
+    displayName: "Checkov Terraform Code"
+    jobs:
+      - job: CheckOV
+        displayName:Checkov terraform code check
+        steps:
+          - task: UsePythonVersion@0
+            inputs:
+              versionSpec: '3.x'
+              addToPath: true
+
+          - script: |
+                pip install checkov
+                checkov -d $(Work_dir) --quiet
+            displayName: 'Install and Run Checkov'
+          steps:
+          - script: |
+              checkov -d $(Work_dir) --output-file checkov-report.json --output json
+            displayName: 'Generate JSON Report'
+
+          - task: PublishBuildArtifacts@1
+            inputs:
+              pathToPublish: '$(Work_dir)/checkov-report.json'
+              artifactName: 'Checkov Report'
+              publishLocation: 'Container'
+
+
+
+
+
+
+
   - stage: tflint
     displayName: "Lint Terraform Code"
     jobs:
