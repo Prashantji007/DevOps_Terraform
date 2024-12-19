@@ -39,9 +39,8 @@ stages:
           displayName: 'Install TFLint'
       
         - script: |
-              tflint --init 
-              cd $(Work_dir)
-              tflint
+              $(Work_dir)\tflint --init 
+              $(Work_dir)\tflint
           displayName: 'Run TFLint'
                             
   - stage: Terraforminstaller
