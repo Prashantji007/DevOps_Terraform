@@ -35,28 +35,11 @@ stages:
             KeyVaultName: 'PATpta1'
             SecretsFilter: '*'
             RunAsPreJob: true
-            
-        - script: |
-            # echo Installing Python...
-            - task: UsePythonVersion@0
-              inputs:
-                versionSpec: '3.x'
-                addToPath: true
-            # curl -o python-installer.exe $(pythonInstallerUrl) # Retrieve the URL from Key Vault
-
-            # python-installer.exe /quiet InstallAllUsers=1 PrependPath=1 Include_test=0
-
-            # echo Copying Python installation to agent folder...
-            # set AGENT_PYTHON_PATH=$(Work_dir)\python  # Define the agent folder path
-            # mkdir "%AGENT_PYTHON_PATH%"
-            # xcopy "C:\Program Files\Python311" "%AGENT_PYTHON_PATH%" /E /I /H /Y
-
-            # echo Adding copied Python folder to PATH...
-            # setx PATH "%AGENT_PYTHON_PATH%;%PATH%"
-
-            # echo Verifying Python installation from agent folder...
-            # "%AGENT_PYTHON_PATH%\python.exe" --version
-            # "%AGENT_PYTHON_PATH%\Scripts\pip.exe" --version
+        - task: UsePythonVersion@0
+          inputs:
+            versionSpec: '3.x'
+            addToPath: true
+            architecture: 'x64'
 
           displayName: Install Python
           
