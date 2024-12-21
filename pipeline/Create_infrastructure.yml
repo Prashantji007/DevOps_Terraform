@@ -118,7 +118,7 @@ stages:
             provider: 'azurerm'
             command: 'init'
             workingDirectory: '$(Work_dir)'
-            backendServiceArm: 'Websure_Service_Connection'
+            backendServiceArm: 'Websure_Service_Connection1'
             backendAzureRmResourceGroupName: 'prashant_rg'
             backendAzureRmStorageAccountName: 'prastoragehai'
             backendAzureRmContainerName: 'mypracontainer'
