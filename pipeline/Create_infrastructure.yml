@@ -53,9 +53,12 @@ stages:
             "%AGENT_PYTHON_PATH%\python.exe" --version
             "%AGENT_PYTHON_PATH%\Scripts\pip.exe" --version
           displayName: Install Python
+          
+        - script: python -m pip install --upgrade pip
+          displayName: Upgrade pip
 
         - script: |
-            pip install checkov
+            python -m pip install checkov
             checkov -d $(Work_dir) --quiet
           displayName: 'Install and Run Checkov'
 
