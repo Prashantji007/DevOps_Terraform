@@ -3,5 +3,6 @@ trigger: none
 pool: Pra_pipe
 
 stages:
-  parameters:
+  
+  parameters: 
     Environments: Dev

@@ -4,5 +4,6 @@ pool: Pra_pipe
 
 
 stages:
+  template: Templates/tf-template.yml
   parameters:
     Environments: Prod
