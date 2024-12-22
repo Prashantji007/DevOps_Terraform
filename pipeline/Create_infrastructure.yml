@@ -35,13 +35,6 @@ stages:
             KeyVaultName: 'PATpta1'
             SecretsFilter: '*'
             RunAsPreJob: true
-        - task: UsePythonVersion@0
-          inputs:
-            versionSpec: '3.x'
-            githubToken: $(githubToken)
-            addToPath: true
-            architecture: 'x64'
-          displayName: Install Python
           
         - script: python -m pip install --upgrade pip
           displayName: Upgrade pip
