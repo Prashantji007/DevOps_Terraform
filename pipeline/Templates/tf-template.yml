@@ -1,3 +1,18 @@
+# parameters:
+# - name: Environments
+#   displayName: Select Environments for deployment
+#   type: string
+#   default: Dev
+#   values: 
+#     - Dev
+#     - Prod
+#     - QA
+#     - Sendbox
+
+parameters:
+  name: Environments
+
+
 variables:
   # this is the first way we directly give like variablename: value
   Work_dir: $(System.DefaultWorkingDirectory)/Environments

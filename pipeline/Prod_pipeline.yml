@@ -1,0 +1,8 @@
+trigger: none
+  
+pool: Pra_pipe
+
+
+stages:
+  parameters:
+    Environments: Prod
