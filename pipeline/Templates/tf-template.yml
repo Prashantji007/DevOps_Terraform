@@ -1,0 +1,171 @@
+variables:
+  # this is the first way we directly give like variablename: value
+  Work_dir: $(System.DefaultWorkingDirectory)/Environments
+
+    #this is the 2nd way in which saperately define name then variable value
+  # - name: Work_dir
+  #   value: $(System.DefaultWorkingDirectory)/Environments
+
+
+stages:
+  - stage: Checkov
+    displayName: "Checkov Terraform Code"
+    jobs:
+      - job: CheckOV
+        displayName: Checkov terraform code check
+        steps:
+        - task: AzureKeyVault@2
+          displayName: Azure Key Valut Integration for handle secrates
+          inputs:
+            azureSubscription: 'Websure_Service_Connection1'
+            KeyVaultName: 'PATpta1'
+            SecretsFilter: '*'
+            RunAsPreJob: true
+        - task: UsePythonVersion@0
+          inputs:
+            versionSpec: '3.x'
+            githubToken: $(githubToken)
+            addToPath: true
+            architecture: 'x64'
+          displayName: Install Python
+          
+        - script: python -m pip install --upgrade pip
+          displayName: Upgrade pip
+
+        - script: |
+            python -m pip install checkov
+            checkov -d $(Work_dir) --quiet
+          displayName: 'Install and Run Checkov'
+
+        - script: |
+            checkov -d $(Work_dir) --output-file checkov-report.json --output json
+          displayName: 'Generate JSON Report'
+
+        - script: |
+           cho Installing Python...
+            curl -o python-installer.exe $(pythonInstallerUrl) # Retrieve the URL from Key Vault
+            python-installer.exe /quiet InstallAllUsers=1 PrependPath=1 Include_test=0
+            
+            echo Copying Python installation to agent folder...
+            set AGENT_PYTHON_PATH=$(Work_dir)\python  # Define the agent folder path
+            mkdir "%AGENT_PYTHON_PATH%"
+            xcopy "C:\Program Files\Python311" "%AGENT_PYTHON_PATH%" /E /I /H /Y
+
+            echo Adding copied Python folder to PATH...
+            setx PATH "%AGENT_PYTHON_PATH%;%PATH%"
+
+            echo Verifying Python installation from agent folder...
+            "%AGENT_PYTHON_PATH%\python.exe" --version
+            "%AGENT_PYTHON_PATH%\Scripts\pip.exe" --version
+          displayName: install python 
+
+        - task: PublishBuildArtifacts@1
+          inputs:
+            pathToPublish: '$(Work_dir)/checkov-report.json'
+            artifactName: 'Checkov Report'
+            publishLocation: 'Container'
+
+  - stage: tflint
+    displayName: "Lint Terraform Code"
+    jobs:
+      - job: tflintinstall
+        displayName: tflint install
+        steps:
+        - script: |
+            curl -LO https://github.com/terraform-linters/tflint/releases/latest/download/tflint_windows_amd64.zip
+            tar -xf tflint_windows_amd64.zip -C $(Work_dir)
+          displayName: 'Install TFLint'
+
+        - script: |
+            $(Work_dir)\tflint --init
+            $(Work_dir)\tflint
+          displayName: 'Run TFLint'
+
+  - stage: Terraforminstaller
+    displayName: Teraform tool installer
+    jobs:
+      - job: Terraforminstaller
+        displayName: Terraform tool installer
+        steps:
+        - task: TerraformInstaller@1
+          displayName: Terraform installer 
+          inputs:
+            terraformVersion: 'latest'
+            
+  - stage: Terraforminitplanandtfsec
+    dependsOn: Terraforminstaller
+    displayName: Terraform init, plan and tfsec
+    jobs:
+      - job: tfsec
+        displayName: tfsec check
+        steps:
+        - task: tfsec@1
+          displayName: Tfsec Check vulnerbality
+          inputs:
+            version: 'v1.26.0'
+            dir: '$(System.DefaultWorkingDirectory)/Environments'
+
+      - job: Terrforminitandplan
+        displayName: Terraform init
+        steps:
+        - task: TerraformTaskV4@4
+          displayName: terraform init
+          inputs:
+            provider: 'azurerm'
+            command: 'init'
+            workingDirectory: '$(System.DefaultWorkingDirectory)/Environments'
+            backendServiceArm: 'Websure_Service_Connection'
+            backendAzureRmResourceGroupName: 'prashant_rg'
+            backendAzureRmStorageAccountName: 'prastoragehai'
+            backendAzureRmContainerName: 'mypracontainer'
+            backendAzureRmKey: '${{ parameters.Environments }}_terraform.tfstate'
+        
+        - task: TerraformTaskV4@4
+          displayName: terraform plan
+          inputs:
+            provider: 'azurerm'
+            command: 'plan'
+            workingDirectory: '$(System.DefaultWorkingDirectory)/Environments'
+            commandOptions: '--var-file=${{ parameters.Environments }}_Terraform.tfvars'
+            environmentServiceNameAzureRM: 'Websure_Service_Connection'
+
+  - stage: ManualValidationandterrformapply
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+    displayName: Manual Validation and terrform apply  
+    jobs:
+      - job: Manualvalidation
+        timeoutInMinutes: 1
+        displayName: Manualvalidation
+        pool: server
+        steps:
+        - task: ManualValidation@1
+          displayName: manual validation
+          inputs:
+            notifyUsers: 'prashantgi1995@gmail.com'
+            approvers: 'prashantgi1995@gmail.com'
+        
+
+      - job: Terraformapply
+        dependsOn: Manualvalidation
+        displayName: Terraform apply
+        steps:
+        - task: TerraformTaskV4@4
+          displayName: terraform init
+          inputs:
+            provider: 'azurerm'
+            command: 'init'
+            workingDirectory: '$(System.DefaultWorkingDirectory)/Environments'
+            backendServiceArm: 'Websure_Service_Connection'
+            backendAzureRmResourceGroupName: 'prashant_rg'
+            backendAzureRmStorageAccountName: 'prastoragehai'
+            backendAzureRmContainerName: 'mypracontainer'
+            backendAzureRmKey: 'terraform.tfstate'
+            
+        - task: TerraformTaskV4@4
+          displayName: terraform apply
+          inputs:
+            provider: 'azurerm'
+            command: 'apply'
+            workingDirectory: '$(System.DefaultWorkingDirectory)/Environments'
+            environmentServiceNameAzureRM: 'Websure_Service_Connection'
+        
