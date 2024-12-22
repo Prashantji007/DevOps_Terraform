@@ -40,9 +40,17 @@ stages:
           displayName: Upgrade pip
 
         - script: |
+            checkov --version  # Confirm Checkov installation
+          displayName: 'Verify Checkov Installation'
+
+        - script: |
             python -m pip install checkov
             checkov -d $(Work_dir) --quiet
           displayName: 'Install and Run Checkov'
+        
+       
+       
+
 
         - script: |
             checkov -d $(Work_dir) --output-file checkov-report.json --output json
