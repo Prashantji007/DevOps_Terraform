@@ -45,7 +45,7 @@ stages:
 
         - script: |
             python -m pip install checkov
-            checkov -d $(Work_dir) --quiet
+            checkov -d $(Work_dir)
           displayName: 'Install and Run Checkov'
         
        
