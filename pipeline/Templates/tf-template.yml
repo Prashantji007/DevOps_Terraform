@@ -13,9 +13,9 @@ parameters:
   name: Environments
 
 
-variables:
-  # this is the first way we directly give like variablename: value
-  Work_dir: $(System.DefaultWorkingDirectory)/Environments
+# variables:
+#   # this is the first way we directly give like variablename: value
+#   Work_dir: $(System.DefaultWorkingDirectory)/Environments
 
     #this is the 2nd way in which saperately define name then variable value
   # - name: Work_dir
