@@ -36,27 +36,8 @@ stages:
             KeyVaultName: 'PATpta1'
             SecretsFilter: '*'
             RunAsPreJob: true
-        - task: UsePythonVersion@0
-          inputs:
-            versionSpec: '3.x'
-            githubToken: $(githubToken)
-            addToPath: true
-            architecture: 'x64'
-          displayName: Install Python
-          
-        - script: python -m pip install --upgrade pip
-          displayName: Upgrade pip
-
-        - script: |
-            python -m pip install checkov
-            checkov -d $(Work_dir) --quiet
-          displayName: 'Install and Run Checkov'
-
-        - script: |
-            checkov -d $(Work_dir) --output-file checkov-report.json --output json
-          displayName: 'Generate JSON Report'
-
-        - script: |
+            
+         - script: |
            cho Installing Python...
             curl -o python-installer.exe $(pythonInstallerUrl) # Retrieve the URL from Key Vault
             python-installer.exe /quiet InstallAllUsers=1 PrependPath=1 Include_test=0
@@ -73,6 +54,18 @@ stages:
             "%AGENT_PYTHON_PATH%\python.exe" --version
             "%AGENT_PYTHON_PATH%\Scripts\pip.exe" --version
           displayName: install python 
+          
+        - script: python -m pip install --upgrade pip
+          displayName: Upgrade pip
+
+        - script: |
+            python -m pip install checkov
+            checkov -d $(Work_dir) --quiet
+          displayName: 'Install and Run Checkov'
+
+        - script: |
+            checkov -d $(Work_dir) --output-file checkov-report.json --output json
+          displayName: 'Generate JSON Report'
 
         - task: PublishBuildArtifacts@1
           inputs:
