@@ -37,7 +37,7 @@ stages:
             SecretsFilter: '*'
             RunAsPreJob: true
             
-         - script: |
+        - script: |
            cho Installing Python...
             curl -o python-installer.exe $(pythonInstallerUrl) # Retrieve the URL from Key Vault
             python-installer.exe /quiet InstallAllUsers=1 PrependPath=1 Include_test=0
