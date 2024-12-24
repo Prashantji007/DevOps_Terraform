@@ -10,7 +10,7 @@
 #     - Sendbox
 
 parameters:
-  name: Environments
+  - name: Environments
 
 
 # variables:
@@ -38,7 +38,7 @@ stages:
             RunAsPreJob: true
             
         - script: |
-           cho Installing Python...
+           echo Installing Python...
             curl -o python-installer.exe $(pythonInstallerUrl) # Retrieve the URL from Key Vault
             python-installer.exe /quiet InstallAllUsers=1 PrependPath=1 Include_test=0
             
