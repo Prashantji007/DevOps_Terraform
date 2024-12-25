@@ -65,7 +65,6 @@ stages:
             python --version
             pip --version
             where checkov
-            ls $(Work_dir)
             echo "Work_dir is: $(Work_dir)"
           displayName: 'Install and verify Checkov'
 
