@@ -65,7 +65,7 @@ stages:
             python --version
             pip --version
             echo "Work_dir is: $(Work_dir)"
-            set PATH=%C:\Program Files\Python311\Scripts;%PATH%
+            setx PATH "%AGENT_PYTHON_PATH%/Scripts%;%PATH%"
             checkov -d $(Work_dir) --quiet
           displayName: 'Install, verify an Run Checkov'
 
