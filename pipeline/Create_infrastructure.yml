@@ -48,9 +48,6 @@ stages:
             checkov -d $(Work_dir)
           displayName: 'Install and Run Checkov'
         
-       
-       
-
 
         - script: |
             checkov -d $(Work_dir) --output-file checkov-report.json --output json
