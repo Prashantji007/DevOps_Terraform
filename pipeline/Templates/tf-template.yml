@@ -66,7 +66,7 @@ stages:
             pip --version
             echo "Work_dir is: $(Work_dir)"
             setx PATH "%AGENT_PYTHON_PATH%/Scripts%;%PATH%"
-            checkov -d $(Work_dir) --quiet
+            pip -m checkov -d $(Work_dir) --quiet
           displayName: 'Install, verify an Run Checkov'
 
         - script: |
