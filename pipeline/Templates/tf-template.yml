@@ -60,8 +60,7 @@ stages:
           displayName: Upgrade pip
 
         - script: |
-            pip install checkov
-            checkov -d $(Work_dir) --quiet
+            pip install checkov -d $(Work_dir) --quiet
           displayName: 'Install and Run Checkov'
 
         - script: |
