@@ -64,7 +64,7 @@ stages:
             pip show checkov
           displayName: 'Install and verify Checkov'
 
-          - script: |
+        - script: |
             checkov -d $(Work_dir) --quiet
           displayName: 'Run Checkov'
 
