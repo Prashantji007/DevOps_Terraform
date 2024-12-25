@@ -8,6 +8,6 @@ variables:
 
 
 stages:
-- template: Templates\tf-template.yml
+- template: Templates\tf-template1.yml
   parameters: 
     Environments: Dev
