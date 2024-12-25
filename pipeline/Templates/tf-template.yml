@@ -61,8 +61,12 @@ stages:
 
         - script: |
             pip install checkov 
+            pip show checkov
+          displayName: 'Install and verify Checkov'
+
+          - script: |
             checkov -d $(Work_dir) --quiet
-          displayName: 'Install and Run Checkov'
+          displayName: 'Run Checkov'
 
         - script: |
             checkov -d $(Work_dir) --output-file checkov-report.json --output json
