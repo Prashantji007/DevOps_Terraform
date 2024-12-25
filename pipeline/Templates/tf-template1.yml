@@ -51,15 +51,15 @@ stages:
             terraformVersion: 'latest'
 
       - job: AzureKeyVault
-              displayName: AzureKeyVault integration
-              steps:
-              - task: AzureKeyVault@2
-                displayName: Azure Key Valut Integration for handle secrates
-                inputs:
-                  azureSubscription: 'Websure_Service_Connection1'
-                  KeyVaultName: 'PATpta1'
-                  SecretsFilter: '*'
-                  RunAsPreJob: true
+        displayName: AzureKeyVault integration
+        teps:
+        - task: AzureKeyVault@2
+          displayName: Azure Key Valut Integration for handle secrates
+          inputs:
+            azureSubscription: 'Websure_Service_Connection1'
+            KeyVaultName: 'PATpta1'
+            SecretsFilter: '*'
+            RunAsPreJob: true    
            
   - stage: Terraforminitplanandtfsec
     dependsOn: Terraforminstaller
@@ -83,7 +83,7 @@ stages:
             provider: 'azurerm'
             command: 'init'
             workingDirectory: '$(Work_dir)'
-            backendServiceArm: '${serviceconnection}'
+            backendServiceArm: 'Websure_Service_Connection1'
             backendAzureRmResourceGroupName: 'prashant_rg'
             backendAzureRmStorageAccountName: 'prastoragehai'
             backendAzureRmContainerName: 'mypracontainer'
@@ -96,7 +96,7 @@ stages:
             command: 'plan'
             workingDirectory: '$(Work_dir)'
             commandOptions: '--var-file=${{ parameters.Environments }}_Terraform.tfvars'
-            environmentServiceNameAzureRM: '${serviceconnection}'
+            environmentServiceNameAzureRM: 'Websure_Service_Connection1'
 
   - stage: ManualValidationandterraformapply
     condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
@@ -123,7 +123,7 @@ stages:
             provider: 'azurerm'
             command: 'init'
             workingDirectory: '$(Work_dir)'
-            backendServiceArm: '${serviceconnection}'
+            backendServiceArm: 'Websure_Service_Connection1'
             backendAzureRmResourceGroupName: 'prashant_rg'
             backendAzureRmStorageAccountName: 'prastoragehai'
             backendAzureRmContainerName: 'mypracontainer'
@@ -135,4 +135,4 @@ stages:
             provider: 'azurerm'
             command: 'apply'
             workingDirectory: '$(Work_dir)'
-            environmentServiceNameAzureRM: '${serviceconnection}'
+            environmentServiceNameAzureRM: 'Websure_Service_Connection1'
