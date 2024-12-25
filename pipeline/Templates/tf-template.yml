@@ -64,13 +64,9 @@ stages:
             pip show checkov
             python --version
             pip --version
-            where checkov
             echo "Work_dir is: $(Work_dir)"
-          displayName: 'Install and verify Checkov'
-
-        - script: |
             checkov -d $(Work_dir) --quiet
-          displayName: 'Run Checkov'
+          displayName: 'Install, verify an Run Checkov'
 
         - script: |
             checkov -d $(Work_dir) --output-file checkov-report.json --output json
