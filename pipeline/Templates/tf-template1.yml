@@ -52,7 +52,7 @@ stages:
 
       - job: AzureKeyVault
         displayName: AzureKeyVault integration
-        teps:
+        steps:
         - task: AzureKeyVault@2
           displayName: Azure Key Valut Integration for handle secrates
           inputs:
