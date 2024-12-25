@@ -72,7 +72,7 @@ stages:
             provider: 'azurerm'
             command: 'init'
             workingDirectory: '$(Work_dir)'
-            backendServiceArm: 'Websure_Service_Connection1'
+            backendServiceArm: '${service_coneection}'
             backendAzureRmResourceGroupName: 'prashant_rg'
             backendAzureRmStorageAccountName: 'prastoragehai'
             backendAzureRmContainerName: 'mypracontainer'
@@ -85,7 +85,7 @@ stages:
             command: 'plan'
             workingDirectory: '$(Work_dir)'
             commandOptions: '--var-file=${{ parameters.Environments }}_Terraform.tfvars'
-            environmentServiceNameAzureRM: 'Websure_Service_Connection'
+            environmentServiceNameAzureRM: '${service_coneection}'
 
   - stage: ManualValidationandterraformapply
     condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
@@ -112,11 +112,11 @@ stages:
             provider: 'azurerm'
             command: 'init'
             workingDirectory: '$(Work_dir)'
-            backendServiceArm: 'Websure_Service_Connection'
+            backendServiceArm: '${service_coneection}'
             backendAzureRmResourceGroupName: 'prashant_rg'
             backendAzureRmStorageAccountName: 'prastoragehai'
             backendAzureRmContainerName: 'mypracontainer'
-            backendAzureRmKey: 'terraform.tfstate'
+            backendAzureRmKey: '${{ parameters.Environments }}.tfstate'
 
         - task: TerraformTaskV4@4
           displayName: terraform apply
@@ -124,4 +124,4 @@ stages:
             provider: 'azurerm'
             command: 'apply'
             workingDirectory: '$(Work_dir)'
-            environmentServiceNameAzureRM: 'Websure_Service_Connection'
+            environmentServiceNameAzureRM: '${service_coneection}'

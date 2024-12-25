@@ -5,6 +5,7 @@ pool: Pra_pipe
 variables:
   # this is the first way we directly give like variablename: value
   Work_dir: $(System.DefaultWorkingDirectory)\Environments
+  service_coneection: Websure_Service_Connection1
 
 stages:
 - template: Templates\tf-template1.yml
