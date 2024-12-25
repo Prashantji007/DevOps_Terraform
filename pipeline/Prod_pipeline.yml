@@ -4,7 +4,7 @@ pool: Pra_pipe
 
 variables:
   # this is the first way we directly give like variablename: value
-  Work_dir: $(System.DefaultWorkingDirectory)/Environments
+  Work_dir: $(System.DefaultWorkingDirectory)\Environments
 
 stages:
 - template: Templates\tf-template1.yml
