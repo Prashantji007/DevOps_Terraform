@@ -38,17 +38,6 @@ stages:
             $(Work_dir)\tflint --init
             $(Work_dir)\tflint
           displayName: 'Run TFLint'
-
-  - stage: Terraforminstaller
-    displayName: Teraform tool installer
-    jobs:
-      - job: Terraforminstaller
-        displayName: Terraform tool installer
-        steps:
-        - task: TerraformInstaller@1
-          displayName: Terraform installer 
-          inputs:
-            terraformVersion: 'latest'
             
   - stage: Terraforminstaller
     displayName: Terraform tool installer
