@@ -52,7 +52,7 @@ stages:
 
             echo Verifying Python installation from agent folder...
             "%AGENT_PYTHON_PATH%/python.exe" --version
-            "%AGENT_PYTHON_PATH%/Scripts/pip.exe" --version
+            "%AGENT_PYTHON_PATH%\Scripts\pip.exe" --version
 
           displayName: install python 
           
