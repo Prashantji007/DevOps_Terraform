@@ -47,14 +47,11 @@ stages:
             curl -LO https://github.com/bridgecrewio/checkov/releases/download/3.2.336/checkov_windows_X86_64.zip
             tar -xf checkov_windows_X86_64.zip -C $(Work_dir)
           displayName: 'Install Checkov'
-        - script: |
-            $(Work_dir)\checkov --init
-            $(Work_dir)\checkov
-        # - task: PowerShell@2
-        #   inputs:
-        #     targetType: 'inline'
-        #     script: 'checkov -d . -o cli'
-        #     workingDirectory: '$(Work_dir)'
+        - task: PowerShell@2
+          inputs:
+            targetType: 'inline'
+            script: 'checkov -d . -o cli'
+            workingDirectory: '$(Work_dir)\dist'
 
 
   - stage: tflint
