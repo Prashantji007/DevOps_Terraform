@@ -36,47 +36,21 @@ stages:
             KeyVaultName: 'PATpta1'
             SecretsFilter: '*'
             RunAsPreJob: true
-            
-        - script: |
-           echo Installing Python...
-            curl -o python-installer.exe $(pythonInstallerUrl) # Retrieve the URL from Key Vault
-            python-installer.exe /quiet InstallAllUsers=1 PrependPath=1 Include_test=0
-            
-            echo Copying Python installation to agent folder...
-            set AGENT_PYTHON_PATH=$(Work_dir)/python  # Define the agent folder path
-            mkdir "%AGENT_PYTHON_PATH%"
-            xcopy "C:/Program Files/Python311" "%AGENT_PYTHON_PATH%" /E /I /H /Y
-
-            echo Adding copied Python folder to PATH...
-            setx PATH "%AGENT_PYTHON_PATH%;%PATH%"
-
-            echo Verifying Python installation from agent folder...
-            "%AGENT_PYTHON_PATH%/python.exe" --version
-          displayName: install python 
-          
-        - script: python -m pip install --upgrade pip
-          displayName: Upgrade pip
-
-        - script: |
-            pip install checkov 
-            pip show checkov
-            python --version
-            pip --version
-            echo "Work_dir is: $(Work_dir)"
-            set PATH=%C:\Program Files\Python311\Scripts;%PATH%
-            pip install checkov "%C:\Program Files\Python311\Scripts\checkov.exe" -d $(Work_dir) --quiet
-            checkov -d $(Work_dir) --quiet
-          displayName: 'Install, verify an Run Checkov'
-
-        - script: |
-            checkov -d $(Work_dir) --output-file checkov-report.json --output json
-          displayName: 'Generate JSON Report'
-
-        - task: PublishBuildArtifacts@1
+        - task: UsePythonVersion@0
           inputs:
-            pathToPublish: '$(Work_dir)/checkov-report.json'
-            artifactName: 'Checkov Report'
-            publishLocation: 'Container'
+            versionSpec: '3.x'
+            githubToken: '$(githubToken)'
+            addToPath: true
+            architecture: 'x64'
+            
+        - script: |
+            checkov -d .
+          displayName: 'Run Checkov Scan'
+        
+        - script: |
+            pip install checkov
+            checkov --version
+          displayName: 'Install Checkov'
 
   - stage: tflint
     displayName: "Lint Terraform Code"
@@ -88,7 +62,7 @@ stages:
             curl -LO https://github.com/terraform-linters/tflint/releases/latest/download/tflint_windows_amd64.zip
             tar -xf tflint_windows_amd64.zip -C $(Work_dir)
           displayName: 'Install TFLint'
-
+        
         - script: |
             $(Work_dir)\tflint --init
             $(Work_dir)\tflint
