@@ -36,17 +36,7 @@ stages:
             KeyVaultName: 'PATpta1'
             SecretsFilter: '*'
             RunAsPreJob: true
-        - task: UsePythonVersion@0
-          inputs:
-            versionSpec: '3.x'
-            githubToken: '$(githubToken)'
-            addToPath: true
-            architecture: 'x64'
             
-        - script: |
-            checkov -d .
-          displayName: 'Run Checkov Scan'
-        
         - script: |
             pip install checkov
             checkov --version
