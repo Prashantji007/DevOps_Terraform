@@ -23,11 +23,11 @@ parameters:
 
 
 stages:
-  - stage: Checkov
-    displayName: "Checkov Terraform Code"
+  - stage: Keyvault
+    displayName: "Azure Key Valut Integration"
     jobs:
-      - job: CheckOV
-        displayName: Checkov terraform code check
+      - job: Keyvaultintegration
+        displayName: Azure Key Valut Integration
         steps:
         - task: AzureKeyVault@2
           displayName: Azure Key Valut Integration for handle secrates
@@ -36,11 +36,23 @@ stages:
             KeyVaultName: 'PATpta1'
             SecretsFilter: '*'
             RunAsPreJob: true
-            
+
+  - stage: Checkov
+    displayName: "Checkov Terraform Code"
+    jobs:
+      - job: CheckOV
+        displayName: Checkov terraform code check
+        steps:
         - script: |
-            pip install checkov
-            checkov --version
+            curl -LO https://github.com/bridgecrewio/checkov/releases/download/3.2.336/checkov_windows_X86_64.zip
+            tar -xf checkov_windows_X86_64.zip -C $(Work_dir)
           displayName: 'Install Checkov'
+        - task: PowerShell@2
+          inputs:
+            targetType: 'inline'
+            script: 'checkov -d . -o cli'
+            workingDirectory: '$(Work_dir)'
+
 
   - stage: tflint
     displayName: "Lint Terraform Code"
