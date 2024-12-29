@@ -42,7 +42,6 @@ stages:
     jobs:
       - job: CheckOV
         displayName: Checkov terraform code check
-        condition: always()
         steps:
         - script: |
             curl -LO https://github.com/bridgecrewio/checkov/releases/download/3.2.336/checkov_windows_X86_64.zip
@@ -52,6 +51,7 @@ stages:
           displayName: 'Install Checkov and run'
         
         - task: PublishTestResults@2
+          condition: always()
           displayName: 'Publish Test Results'
           inputs:
             testResultsFiles: 'results_junitxml.xml'
