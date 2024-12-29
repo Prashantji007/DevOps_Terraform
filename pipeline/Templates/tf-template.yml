@@ -49,14 +49,6 @@ stages:
             cd $(Work_dir)\dist
             checkov -d $(Work_dir) -o junitxml --output-file-path $(Work_dir)\Test_Result
           displayName: 'Install Checkov and run'
-        
-        - task: PublishTestResults@2
-          condition: always()
-          displayName: 'Publish Test Results'
-          inputs:
-            testResultsFiles: 'results_junitxml.xml'
-            searchFolder: '$(Work_dir)\Test_Result\'
-            testRunTitle: 'Checkov Results'
 
   - stage: tflint
     displayName: "Lint Terraform Code"
@@ -70,9 +62,18 @@ stages:
           displayName: 'Install TFLint'
         
         - script: |
-            $(Work_dir)\tflint --init
-            $(Work_dir)\tflint
+            cd $(Work_dir)
+            tflint --init
+            tflint --chdir=$(Work_dir) --format junit > $(Work_dir)\Test_Result
           displayName: 'Run TFLint'
+
+        - task: PublishTestResults@2
+          condition: always()
+          displayName: 'Publish Test Results'
+          inputs:
+            testResultsFiles: '*.xml'
+            searchFolder: '$(Work_dir)\Test_Result\'
+            testRunTitle: 'Tests Results'
 
   - stage: Terraforminstaller
     displayName: Teraform tool installer
