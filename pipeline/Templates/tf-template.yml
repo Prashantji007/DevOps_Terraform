@@ -49,6 +49,13 @@ stages:
             cd $(Work_dir)\dist
             checkov -d $(Work_dir) -o junitxml --output-file-path $(Work_dir)\Test_Result
           displayName: 'Install Checkov and run'
+        
+        - task: PublishTestResults@2
+          displayName: 'Publish Test Results'
+          inputs:
+            testResultsFiles: 'results_junitxml.xml'
+            searchFolder: '$(Work_dir)\Test_Result\'
+            testRunTitle: 'Checkov Results'
 
   - stage: tflint
     displayName: "Lint Terraform Code"
