@@ -38,25 +38,17 @@ stages:
             RunAsPreJob: true
 
   - stage: Checkov
-      displayName: "Checkov Terraform Code"
-      jobs:
-        - job: CheckOV
-          displayName: Checkov terraform code check
-          steps:
-          - script: |
+    displayName: "Checkov Terraform Code"
+    jobs:
+      - job: CheckOV
+        displayName: Checkov terraform code check
+        steps:
+        - script: |
             curl -LO https://github.com/bridgecrewio/checkov/releases/download/3.2.336/checkov_windows_X86_64.zip
             tar -xf checkov_windows_X86_64.zip -C $(Work_dir)
-          displayName: 'Install Checkov'
-
-          - task: PowerShell@2
-            inputs:
-              filePath: 'checkov -d . -o cli'
-              workingDirectory: '$(Work_dir)'
-            
-        - script: |
-            pip install checkov
-            checkov --version
-          displayName: 'Install Checkov'
+            cd $(Work_dir)\dist
+            checkov -d $(Work_dir) -o cli
+          displayName: 'Install Checkov and run'
 
   - stage: tflint
     displayName: "Lint Terraform Code"
