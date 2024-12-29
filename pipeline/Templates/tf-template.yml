@@ -63,7 +63,7 @@ stages:
         - script: |
             cd $(Work_dir)
             tflint --init
-            tflint --chdir=$(Work_dir) --format junit > $(Work_dir)\Test_Result
+            tflint --chdir=$(Work_dir) --format junit > $(Work_dir)\tflint_Result.xml
           displayName: 'Run TFLint'
 
         - task: PublishTestResults@2
