@@ -45,10 +45,9 @@ stages:
         displayName: Checkov terraform code check
         condition: always()
         steps:
-        - task: PowerShell@2
+        - task: CmdLine@2
           displayName: 'download checkov and extract checkov and run'
           inputs:
-            targetType: 'inline'
             script: |
               curl -LO https://github.com/bridgecrewio/checkov/releases/download/3.2.336/checkov_windows_X86_64.zip
               tar -xf checkov_windows_X86_64.zip -C $(Work_dir)
@@ -67,16 +66,15 @@ stages:
         displayName: tflint terraform code check
         condition: always()
         steps:
-        - task: PowerShell@2
+        - task: CmdLine@2
           displayName: 'Download and extract TFLint'
           inputs:
-            targetType: 'inline'
             script: |
               curl -LO https://github.com/terraform-linters/tflint/releases/latest/download/tflint_windows_amd64.zip
               tar -xf tflint_windows_amd64.zip -C $(Work_dir)
               cd $(Work_dir)
               tflint --init
-              tflint --chdir=$(Work_dir) --format junit > \Test_Result\tflint.xml
+              tflint --chdir=$(Work_dir) --format junit > $(Work_dir)\Test_Result\tflint.xml
 
         # - script: |
         #     curl -LO https://github.com/terraform-linters/tflint/releases/latest/download/tflint_windows_amd64.zip
