@@ -41,18 +41,18 @@ stages:
   - stage: Checkovandtflint
     displayName: "Checkov and tflint apply on Terraform Code"
     jobs:
-      - job: CheckOV
-        displayName: Checkov terraform code check
+      - job: CheckOVandTFLint
+        displayName: Checkov and tflint terraform code check
         steps:
         - task: CmdLine@2
           condition: always()
-          displayName: 'download checkov and extract checkov and run'
+          displayName: 'download checkov and extract checkov then run'
           inputs:
             script: |
               curl -LO https://github.com/bridgecrewio/checkov/releases/download/3.2.336/checkov_windows_X86_64.zip
               tar -xf checkov_windows_X86_64.zip -C $(Work_dir)
               cd $(Work_dir)\dist
-              checkov -d $(System.DefaultWorkingDirectory)\Modules -o junitxml --output-file-path $(Work_dir)\Test_Result
+              checkov -d $(Work_dir) -o junitxml --output-file-path $(Work_dir)\Test_Result
               
         # steps:
         # - script: |
@@ -68,13 +68,13 @@ stages:
       #   steps:
         - task: CmdLine@2
           condition: always()
-          displayName: 'Download and extract TFLint'
+          displayName: 'Download and extract TFLint then run'
           inputs:
             script: |
               curl -LO https://github.com/terraform-linters/tflint/releases/latest/download/tflint_windows_amd64.zip
               tar -xf tflint_windows_amd64.zip -C $(Work_dir)
               $(Work_dir)/tflint --init
-              $(Work_dir)/tflint --chdir=$(System.DefaultWorkingDirectory)\Modules --format junit > $(Work_dir)\Test_Result\tflint-output.xml
+              $(Work_dir)/tflint --chdir=$(Work_dir) --format junit > $(Work_dir)\Test_Result\tflint-output.xml
 
         # - script: |
         #     curl -LO https://github.com/terraform-linters/tflint/releases/latest/download/tflint_windows_amd64.zip
@@ -89,7 +89,7 @@ stages:
 
         - task: PublishTestResults@2
           condition: always()
-          displayName: 'Publish Test Results'
+          displayName: 'Publish Test Results for checkov and tflint'
           inputs:
             testResultsFiles: '*.xml'
             searchFolder: '$(Work_dir)\Test_Result\'
