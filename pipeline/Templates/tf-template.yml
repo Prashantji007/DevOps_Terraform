@@ -91,7 +91,7 @@ stages:
           displayName: 'Publish Test Results'
           inputs:
             testResultsFiles: '*.xml'
-            searchFolder: '$(Work_dir)/Test_Result/'
+            searchFolder: '$(Work_dir)\Test_Result\'
             testRunTitle: 'Tests Results'
 
   - stage: Terraforminstaller
