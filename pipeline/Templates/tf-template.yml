@@ -1,3 +1,4 @@
+
 # parameters:
 # - name: Environments
 #   displayName: Select Environments for deployment
@@ -44,7 +45,7 @@ stages:
         displayName: Checkov terraform code check
         condition: always()
         steps:
-        - task: checkov@1
+        - task: PowerShell@2
           displayName: 'download checkov and extract checkov and run'
           inputs:
             targetType: 'inline'
@@ -66,7 +67,7 @@ stages:
         displayName: tflint terraform code check
         condition: always()
         steps:
-        - task: tflint@2
+        - task: PowerShell@2
           displayName: 'Download and extract TFLint'
           inputs:
             targetType: 'inline'
