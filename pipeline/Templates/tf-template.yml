@@ -62,10 +62,10 @@ stages:
         #     checkov -d $(Work_dir) -o junitxml --output-file-path $(Work_dir)\Test_Result
         #   displayName: 'download checkov and extract checkov and run'
 
-      - job: tflintinstall
-        displayName: tflint terraform code check
-        condition: always()
-        steps:
+      # - job: tflintinstall
+      #   displayName: tflint terraform code check
+      #   condition: always()
+      #   steps:
         - task: CmdLine@2
           displayName: 'Download and extract TFLint'
           inputs:
