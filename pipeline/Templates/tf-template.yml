@@ -43,9 +43,9 @@ stages:
     jobs:
       - job: CheckOV
         displayName: Checkov terraform code check
-        condition: always()
         steps:
         - task: CmdLine@2
+          condition: always()
           displayName: 'download checkov and extract checkov and run'
           inputs:
             script: |
@@ -67,6 +67,7 @@ stages:
       #   condition: always()
       #   steps:
         - task: CmdLine@2
+          condition: always()
           displayName: 'Download and extract TFLint'
           inputs:
             script: |
