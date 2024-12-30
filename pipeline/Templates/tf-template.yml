@@ -73,7 +73,7 @@ stages:
               curl -LO https://github.com/terraform-linters/tflint/releases/latest/download/tflint_windows_amd64.zip
               tar -xf tflint_windows_amd64.zip -C $(Work_dir)
               $(Work_dir)/tflint --init
-              $(Work_dir)/tflint --chdir=$(Work_dir) --format junit > tflint.xml
+              $(Work_dir)/tflint --chdir=$(Work_dir) --format junit > $(Work_dir)\Test_Result\tflint.xml
 
         # - script: |
         #     curl -LO https://github.com/terraform-linters/tflint/releases/latest/download/tflint_windows_amd64.zip
