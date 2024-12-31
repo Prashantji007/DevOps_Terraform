@@ -32,8 +32,8 @@ stages:
         steps:
         - script: |
             curl -LO https://golang.org/dl/go1.17.6.linux-amd64.tar.gz
-            tar -xzf go1.17.6.linux-amd64.tar.gz -C /usr/local
-            export PATH=$PATH:/usr/local/go/bin
+            tar -xzf go1.17.6.linux-amd64.tar.gz -C $(Work_dir)
+            cd $(Work_dir)
             go version
             displayName: 'Install Go dependencies'
         - script: |
