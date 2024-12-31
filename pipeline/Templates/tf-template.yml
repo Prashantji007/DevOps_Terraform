@@ -24,6 +24,28 @@ parameters:
 
 
 stages:
+  - stage: Terratest
+    displayName: "Run Terratest"
+    jobs:
+      - job: RunTerratest
+        displayName: Run Terratest
+        steps:
+        - task: UsePythonVersion@0
+          inputs:
+            versionSpec: '3.x'
+            addToPath: true
+        - script: |
+            curl -LO https://golang.org/dl/go1.17.6.linux-amd64.tar.gz
+            tar -xzf go1.17.6.linux-amd64.tar.gz -C /usr/local
+            export PATH=$PATH:/usr/local/go/bin
+            go version
+            displayName: 'Install Go dependencies'
+        - script: |
+            go test -v -timeout 30m
+          displayName: 'Run Terratest'
+
+
+          
   - stage: Keyvault
     displayName: "Azure Key Valut Integration"
     jobs:
