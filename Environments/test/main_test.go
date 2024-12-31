@@ -7,18 +7,15 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestTerraformExample(t *testing.T) {
-	terraformOptions := &terraform.Options{
-		TerraformDir: "../", // Path to Terraform code
-	}
+func TestTerraformNetworkModule(t *testing.T) {
+	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
+		TerraformDir: "../Environments/",
+	})
 
-	// Clean up resources after test
 	defer terraform.Destroy(t, terraformOptions)
 
-	// Run terraform init and apply
 	terraform.InitAndApply(t, terraformOptions)
 
-	// Verify Terraform output
-	output := terraform.Output(t, terraformOptions, "example_output")
-	assert.Equal(t, "expected_value", output)
+	instanceID := terraform.Output(t, terraformOptions, "instance_id")
+	assert.NotEmpty(t, instanceID)
 }
