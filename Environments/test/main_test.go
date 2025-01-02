@@ -16,6 +16,6 @@ func TestTerraformNetworkModule(t *testing.T) {
 
 	terraform.InitAndApply(t, terraformOptions)
 
-	instanceID := terraform.Output(t, terraformOptions, "instance_id")
+	instanceID := terraform.Output(t, terraformOptions, "hello_world")
 	assert.NotEmpty(t, instanceID)
 }
