@@ -9,13 +9,14 @@ import (
 
 func TestTerraformNetworkModule(t *testing.T) {
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		TerraformDir: "../../Modules/",
+		TerraformDir: "../../../Modules/",
 	})
 
 	defer terraform.Destroy(t, terraformOptions)
 
 	terraform.InitAndApply(t, terraformOptions)
 
-	instanceID := terraform.Output(t, terraformOptions, "hello_world")
-	assert.NotEmpty(t, instanceID)
+	Output := terraform.Output(t, terraformOptions, "example_output")
+	assert.NotEmpty(t, Output)
+	assert.Equal(t, "expected_value", output)
 }
