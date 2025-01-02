@@ -9,7 +9,7 @@ import (
 
 func TestTerraformNetworkModule(t *testing.T) {
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		TerraformDir: "../../../Modules/",
+		TerraformDir: "../../Environments/",
 	})
 
 	defer terraform.Destroy(t, terraformOptions)
