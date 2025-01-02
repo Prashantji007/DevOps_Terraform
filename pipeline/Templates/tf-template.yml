@@ -38,7 +38,6 @@ stages:
           displayName: 'Install Go dependencies'
         - script: |
             cd $(Work_dir)\go\bin
-            go get github.com/gruntwork-io/terratest/modules/terraform
             go test -v -timeout 30m
           displayName: 'Run Terratest'
 
