@@ -31,12 +31,13 @@ stages:
         displayName: Run Terratest
         steps:
         - script: |
-            curl -LO https://golang.org/dl/go1.17.6.linux-amd64.tar.gz
-            tar -xzf go1.17.6.linux-amd64.tar.gz -C $(Work_dir)
+            curl -LO https://go.dev/dl/go1.23.4.windows-amd64.zip
+            tar -xzf go1.23.4.windows-amd64.zip -C $(Work_dir)
             cd $(Work_dir)\go\bin
             go version
             displayName: 'Install Go dependencies'
         - script: |
+            cd $(Work_dir)\Environments\test
             go test -v -timeout 30m
           displayName: 'Run Terratest'
 
