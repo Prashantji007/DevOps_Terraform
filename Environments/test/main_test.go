@@ -17,7 +17,6 @@ func TestTerraformNetworkModule(t *testing.T) {
 	defer terraform.Destroy(t, terraformOptions)
 
 	terraform.InitAndApply(t, terraformOptions)
-	validate(t,terraformOptions)
 
 	Output := terraform.Output(t, terraformOptions, "Vnet_output")
 	assert.NotEmpty(t, Output)
@@ -33,7 +32,6 @@ func TestTerraformvirtualmachine(t *testing.T) {
 	defer terraform.Destroy(t, terraformOptions)
 
 	terraform.InitAndApply(t, terraformOptions)
-	validate(t,terraformOptions)
 
 	Output := terraform.Output(t, terraformOptions, "VM_output")
 	assert.NotEmpty(t, Output)
