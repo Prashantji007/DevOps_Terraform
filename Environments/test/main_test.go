@@ -9,8 +9,14 @@ import (
 
 func TestTerraformNetworkModule(t *testing.T) {
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		TerraformDir: "../../../Environments/Main.tf",
+		TerraformDir: "../../../Modules/Azurerm_Vnet",
 	})
+
+	func TestTerraformvirtualmachine(t *testing.T) {
+		terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
+			TerraformDir: "../../../Modules/Azurerm_VM",
+		})
+	}
 
 	defer terraform.Destroy(t, terraformOptions)
 
