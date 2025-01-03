@@ -16,7 +16,7 @@ func TestTerraformNetworkModule(t *testing.T) {
 		terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
 			TerraformDir: "../../../Modules/Azurerm_VM",
 		})
-	}
+	
 
 	defer terraform.Destroy(t, terraformOptions)
 
@@ -26,4 +26,5 @@ func TestTerraformNetworkModule(t *testing.T) {
 	Output := terraform.Output(t, terraformOptions, "Vnet_output")
 	assert.NotEmpty(t, Output)
 	//assert.Equal(t, "expected_value", output)
+}
 }
