@@ -9,14 +9,14 @@ import (
 
 func TestTerraformNetworkModule(t *testing.T) {
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		TerraformDir: "../../Environments/",
+		TerraformDir: "../../Modules/Azurerm_Vnet",
 	})
 
 	defer terraform.Destroy(t, terraformOptions)
 
 	terraform.InitAndApply(t, terraformOptions)
 
-	Output := terraform.Output(t, terraformOptions, "example_output")
+	Output := terraform.Output(t, terraformOptions, "Vnet_output")
 	assert.NotEmpty(t, Output)
 	//assert.Equal(t, "expected_value", output)
 }
